@@ -487,3 +487,4 @@ window.addEventListener('load', () => {
     }, 550); // matches typical scroll duration; adjust if necessary
   });
 })();
+

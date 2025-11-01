@@ -904,3 +904,79 @@ body.modal-open {
   
   .footer-right { display:flex; gap:12px; align-items:center; justify-content: center; }
 }
+
+/* Page reveal / curtains */
+.page-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  background: var(--bg, #FBF6F1);
+  pointer-events: none; /* allow interactions once removed */
+}
+
+/* Motto (center) */
+.motto-wrap {
+  text-align: center;
+  z-index: 100005;
+  pointer-events: none;
+}
+.motto {
+  font-family: 'Marck Script', cursive;
+  font-size: clamp(58px, 5vw, 48px);
+  font-weight: 400;
+  color: #2d2929;
+  margin: 0;
+  letter-spacing: .2px;
+  text-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  transform-origin: center;
+}
+.motto-sub {
+  margin-top: 10px;
+  color: rgba(255,255,255,0.92);
+  font-family: "Lora", serif;
+  font-size: 16px;
+  opacity: .95;
+}
+
+/* Curtains */
+.curtain {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 50%;
+  z-index: 100000;
+  pointer-events: auto;
+  box-shadow: inset 0 18px 60px rgba(0,0,0,0.14);
+  transform-origin: left center;
+}
+
+/* left and right styles & gradients */
+.curtain-left {
+  left: 0;
+  background: linear-gradient(180deg, #C85A3A 0%, #E78B6B 100%); /* warm */
+}
+.curtain-right {
+  right: 0;
+  background: linear-gradient(180deg, #E78B6B 0%, #C85A3A 100%);
+  transform-origin: right center;
+}
+
+/* optional subtle diagonal pattern */
+.curtain::after{
+  content: "";
+  position:absolute; inset:0;
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.03) 0 10%, transparent 10%);
+  mix-blend-mode: overlay;
+  opacity: 0.12;
+}
+
+/* ensure content under reveal is not scrollable until done */
+body.reveal-locked { overflow: hidden; }
+
+/* small responsive tweak */
+@media (max-width:520px){
+  .motto { font-size: clamp(20px, 7vw, 30px); color: #000;}
+  .motto-sub{ font-size:14px; color: #000;}
+}
