@@ -318,4 +318,172 @@
     };
   }
 })();
+// GSAP reveals (page load + scroll)
+// Put this after GSAP scripts and run once DOM is ready
+window.addEventListener('load', () => {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    console.warn('GSAP or ScrollTrigger not found');
+    return;
+  }
 
+  gsap.registerPlugin(ScrollTrigger);
+
+  // --------- page load / intro animations ----------
+  const introTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+  // nav slide/fade
+  introTL.from('.navbar', { y: -18, opacity: 0, duration: 0.55 });
+
+  // headline and paragraph reveal (staggered)
+  introTL.from('.header-content h1', { y: 30, opacity: 0, duration: 0.7 }, '-=0.3');
+  introTL.from('.header-content p', { y: 18, opacity: 0, duration: 0.6 }, '-=0.45');
+
+  // hero image subtle scale/opacity
+  introTL.from('.header-image img', { scale: 1.06, opacity: 0, duration: 0.9 }, '-=0.5');
+
+  // CTA pop (if present)
+  introTL.from('.cta-btn button', { scale: 0.94, opacity: 0, duration: 0.45 }, '-=0.5');
+
+  // --------- small utility reveal function ----------
+  // usage: reveal(selector, options)
+  function reveal(sel, opts = {}) {
+    const defaults = {
+      trigger: sel,
+      start: 'top 82%',
+      duration: 0.7,
+      y: 28,
+      opacity: 0,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrub: false,
+      once: true, // do once by default
+    };
+    const config = Object.assign({}, defaults, opts);
+
+    if (config.stagger && config.targets) {
+      // if user passed targets array (rare) - not needed here
+    }
+
+    // create animation
+    gsap.from(sel, {
+      y: config.y,
+      opacity: config.opacity,
+      duration: config.duration,
+      stagger: config.stagger,
+      ease: config.ease,
+      scrollTrigger: {
+        trigger: config.trigger,
+        start: config.start,
+        toggleActions: config.once ? 'play none none none' : 'play pause resume reverse',
+        // markers: true, // enable for debugging
+      }
+    });
+  }
+
+  // --------- scroll reveals for sections ----------
+  // services cards: staggered cards reveal
+  reveal('.service-card', { trigger: '.services', start: 'top 80%', stagger: 0.12, y: 22, duration: 0.7 });
+
+  // about images (bg and portrait)
+  reveal('.bg-img', { trigger: '.about', start: 'top 85%', y: 20, duration: 0.9 });
+  reveal('.portrait', { trigger: '.about', start: 'top 85%', y: 8, duration: 0.9, stagger: 0.06 });
+
+  // about text content (heading & paragraph) — use a little clip / slide effect for headings
+  gsap.from('.about-text h1', {
+    y: 18, opacity: 0, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.about-text', start: 'top 85%', toggleActions: 'play none none none' }
+  });
+  gsap.from('.about-text p', {
+    y: 22, opacity: 0, duration: 0.85, delay: 0.08, ease: 'power3.out',
+    scrollTrigger: { trigger: '.about-text', start: 'top 85%', toggleActions: 'play none none none' }
+  });
+
+  // certificates images
+  reveal('.modal-container img', { trigger: '.certificates', start: 'top 90%', y: 18, duration: 0.7, stagger: 0.12 });
+
+  // reviews container — fade + slight y
+  reveal('.reviews', { trigger: '.reviews', start: 'top 85%', y: 20, duration: 0.7, stagger: 0 });
+
+  // individual carousel item (when entering view animate text lines)
+  gsap.utils.toArray('.carousel-item').forEach(item => {
+    gsap.from(item.querySelectorAll('p, h3'), {
+      y: 18,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: item,
+        start: 'top 92%',
+        toggleActions: 'play none none none',
+      }
+    });
+  });
+
+  // FAQ: reveal each faq-item one by one
+  gsap.utils.toArray('.faq-item').forEach((el, i) => {
+    gsap.from(el, {
+      y: 20, opacity: 0, duration: 0.6, delay: i * 0.03,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' }
+    });
+  });
+
+  // footer entrance
+  reveal('footer', { trigger: 'footer', start: 'top 95%', y: 26, duration: 0.7 });
+
+  // --------- small hover micro-interaction (optional) ----------
+  // subtle tilt on service card hover (nice microfeedback)
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mouseenter', () => gsap.to(card, { y: -6, boxShadow: '0 22px 60px rgba(18,14,12,0.12)', duration: 0.28 }));
+    card.addEventListener('mouseleave', () => gsap.to(card, { y: 0, boxShadow: '0 14px 40px rgba(18,14,12,0.06)', duration: 0.28 }));
+  });
+
+  // --------- responsiveness: adjust triggers for small screens ----------
+  ScrollTrigger.matchMedia({
+    // desktop
+    "(min-width: 820px)": function() {
+      // desktop-specific tweaks (no-op for now)
+    },
+    // mobile
+    "(max-width: 819px)": function() {
+      // make animations shorter on small devices
+      gsap.globalTimeline.duration = 0.7;
+    }
+  });
+
+  // Debug helper (uncomment to turn on ScrollTrigger markers)
+  // ScrollTrigger.getAll().forEach(st => st.refresh());
+});
+
+// smooth-scroll-to-form.js — add to contact.js or main.js
+(function () {
+  const btn = document.getElementById('signUp');
+  if (!btn) return;
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const target = document.getElementById('contactForm');
+    if (!target) return;
+
+    // detect fixed header height (select your navbar or fallback)
+    const navbar = document.querySelector('.navbar');
+    const headerOffset = navbar ? navbar.offsetHeight : 80; // fallback 80px
+    const extraGap = 16; // additional spacing between navbar and form
+
+    const targetY = target.getBoundingClientRect().top + window.pageYOffset - headerOffset - extraGap;
+
+    window.scrollTo({
+      top: Math.max(0, Math.round(targetY)),
+      behavior: 'smooth'
+    });
+
+    // focus first input after the scroll finishes (approx)
+    // setTimeout used to wait for the scroll; tweak delay if needed
+    setTimeout(() => {
+      const firstInput = target.querySelector('input, textarea, button');
+      if (firstInput) firstInput.focus({ preventScroll: true });
+    }, 550); // matches typical scroll duration; adjust if necessary
+  });
+})();

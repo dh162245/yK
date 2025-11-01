@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>yK Psychologist</title>
   <link rel="stylesheet" href="src/style.css">
+  <!-- Fonts (Cyrillic included) -->
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&family=Lora:wght@400;700&family=Caveat:wght@400;700&display=swap&subset=cyrillic" rel="stylesheet">
+
+<!-- GSAP (animation lib) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <!-- EmailJS client lib -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+
 </head>
 <body>
   <nav>
@@ -27,9 +37,9 @@
     </button>
 
     <div class="nav-links" id="mobile-menu">
-      <a href="#">Главная</a>
-      <a href="#">Обо мне</a>
-      <a href="#">Услуги</a>
+      <a href="#headerContent">Главная</a>
+      <a href="#about">Обо мне</a>
+      <a href="#services">Услуги</a>
     </div>
     <div class="cta-btn">
         <button id="signUp">Записаться</button>
@@ -38,9 +48,9 @@
 </nav>
 
     <header>
-      <div class="header-content">
-        <h1>Психологическая поддержка в безопасном онлайн-пространстве</h1>
-        <p>Помогаю справляться с тревогой, эмоциональным выгоранием и трудностями в отношениях. Онлайн-сессии на русском и украинском — удобно, конфиденциально, эффективно.</p>
+      <div class="header-content" id="headerContent">
+        <h1>Крамаренко Юлия Витальевна</h1>
+        <p>Я —  психолог-консультант и семейный терапевт. Работаю в формате онлайн (Zoom/Skype/Telegram), использую КПТ и интегративные подходы. Предлагаю индивидуальные и парные сессии, а также практические онлайн-материалы для самостоятельной работы.</p>
           </div>
       <div class="header-image">
         <img src="public/img/14.jpeg" alt="Psychologist Illustration">
@@ -49,45 +59,62 @@
     <main>
       <section class="info">
         <div class="main-image">
-            <img src="public/img/12.jpeg" alt="Therapy Session Illustration">
+            <img src="public/img/2.jpeg" alt="Therapy Session Illustration">
         </div>
           <div class="main-info">
+            <h2>Психологическая поддержка в безопасном онлайн-пространстве</h2>
             <h2>
-              Я — Крамаренко Юлия Витальевна, психолог-консультант и семейный терапевт. Работаю в формате онлайн (Zoom/Skype/Telegram), использую КПТ и интегративные подходы. Предлагаю индивидуальные и парные сессии, а также практические онлайн-материалы для самостоятельной работы.
+              Помогаю справляться с тревогой, эмоциональным выгоранием и трудностями в отношениях. Онлайн-сессии на русском и украинском — удобно, конфиденциально, эффективно.
             </h2>
             <!-- <button id="signUp">Записаться на сессию</button> -->
           </div>
       </section>
-      <section class="services">
+      <section class="services" id="services">
         <h2>Мои услуги</h2>
         <div class="service-cards">
           <div class="service-card">
-            <img src="public/img/1.jpeg" alt="Individual Therapy">
+            <div class="card-img">
+            <img src="public/img/solo.png" alt="Individual Therapy">
+            </div>
+            <div class="card-text">
             <h3>Индивидуальная терапия — 60 мин</h3>
             <p>Помощь при тревоге, панических атаках, эмоциональном выгорании, низкой самооценке и кризисных состояниях. Работаем с конкретными задачами и создаём план изменений.</p>
+            </div>
           </div>
           <div class="service-card">
-            <img src="public/img/2.jpeg" alt="Couples Therapy">
+            <div class="card-img">
+            <img src="public/img/pair.png" alt="Couples Therapy">
+            </div>
+            <div class="card-text">
             <h3>Семейная и парная терапия — 60 мин</h3>
             <p>Сеансы для пар и семей: улучшение коммуникации, восстановление доверия, работа с повторяющимися конфликтами и эмоциональной дистанцией.</p>
+            </div>
           </div>
           <div class="service-card">
-            <img src="public/img/3.jpeg" alt="Self-Help Resources">
+            <div class="card-img">
+            <img src="public/img/remote.png" alt="Self-Help Resources">
+            </div>
+            <div class="card-text">
             <h3>Знакомительная мини-сессия — 15 мин (бесплатно)</h3>
             <p>Короткая вводная встреча, чтобы понять формат работы и решить, подходит ли вам мой подход.</p>
+            </div>
           </div>
           <div class="service-card">
-            <img src="public/img/3.jpeg" alt="Self-Help Resources">
+            <div class="card-img">
+            <img src="public/img/online.png" alt="Self-Help Resources">
+            </div>
+            <div class="card-text">
             <h3>Онлайн-продукты</h3>
             <p>Короткие курсы, чек-листы и видео-уроки для самостоятельной работы и поддержки между сессиями.</p>
+            </div>
           </div>
         </section>
         
-        <section class="about">
+        <section class="about" id="about">
           <div class="about-img">
+            <img class="portrait" src="public/img/13.jpeg" alt="background photo">
+          <img class="bg-img" src="public/img/3.jpeg" alt="portrait">
           </div>
-          <img src="public/img/3.jpeg" alt="portrait">
-          <img src="public/img/13.jpeg" alt="background photo">
           <div class="about-text">
                       <h1>Обо мне</h1>
             <p>Я окончила магистратуру Киевского национального университета имени Тараса Шевченко по специальности «Семейная психология». Я регулярно повышаю квалификацию и имею сертификат по когнитивно-поведенческой терапии. Работаю с взрослыми и парами: помогаю справляться с тревогой, эмоциональным выгоранием, кризисами, проблемами в отношениях и низкой самооценкой. Моя цель — создать тёплую, безопасную и прагматичную рабочую среду, где каждый клиент почувствует опору и сможет ясно определить следующие шаги.</p>
@@ -144,19 +171,75 @@
             <p>Нет, я консультирую взрослых и пары.</p>
           </div>
         </section>
+        <section class="form-section wrapper">
+          <h1>Записаться на консультацию!</h1>
+      <form id="contactForm" class="contact-form" novalidate>
+        <!-- hidden timestamp for timing check -->
+        <input type="hidden" id="ts" name="ts">
+
+        <!-- honeypot (hidden from users) -->
+        <label class="hp" aria-hidden="true">Leave blank: <input name="hp_field" autocomplete="off"></label>
+
+        <div class="field">
+          <label for="name">Имя *</label>
+          <input id="name" name="name" required minlength="2" placeholder="Ваше имя">
+        </div>
+
+        <div class="field">
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label for="message">Коротко о запросе *</label>
+          <textarea id="message" name="message" required minlength="6" placeholder="Напишите пару слов, чего вы ждёте от 15-минутной консультации"></textarea>
+        </div>
+
+        <div class="field">
+          <button id="contactSubmit" type="submit" class="btn-cta">Отправить</button>
+        </div>
+
+        <p id="cfStatus" class="status" role="status" aria-live="polite"></p>
+        <p class="note">Мы свяжемся по указанному email. Никакого спама.</p>
+      </form>
+    </section>
     </main>
-    <footer>
-      <div class="footer-content">
-        <div class="footer-logo">
-          <a href="#">yK</a>
-        </div>
-        <div class="footer-links">
-          <a href="#">Главная</a>
-          <a href="#">Обо мне</a>
-          <a href="#">Услуги</a>
-        </div>
+   <footer class="site-footer">
+  <div class="footer-content wrapper">
+
+    <div class="footer-right">
+     
+
+      <!-- Social icons -->
+      <div class="social-icons" aria-label="Социальные сети">
+        <a class="social-btn" href="https://t.me/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+          <!-- Telegram (paper plane) -->
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M21.5 3.5L2.7 10.2c-.7.2-.7.9-.1 1.1l4.1 1.3 1.6 5.4c.2.7.9.8 1.4.4l2.6-1.9 3.9 2.8c.7.5 1.5.1 1.7-.7l3.4-15.3c.2-.9-.7-1.6-1.5-1.3z"/>
+          </svg>
+        </a>
+
+        <a class="social-btn" href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <!-- Instagram -->
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm5.2-2.4a1.12 1.12 0 1 0 0 2.24 1.12 1.12 0 0 0 0-2.24z"/>
+          </svg>
+        </a>
+
+        <a class="social-btn" href="https://facebook.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <!-- Facebook -->
+          <svg viewBox="0 0 24 24" role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor" d="M22 12a10 10 0 1 0-11.5 9.9V14.9h-2.4V12h2.4V9.6c0-2.4 1.4-3.7 3.5-3.7 1 0 2 .08 2 .08v2.2h-1.1c-1.1 0-1.5.72-1.5 1.44V12h2.6l-.4 2.9h-2.2v7A10 10 0 0 0 22 12z"/>
+          </svg>
+        </a>
       </div>
-    </footer>
+    </div>
+  </div>
+</footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
     <script src="src/main.js"></script>
+    <script src="src/contact.js"></script>
 </body>
 </html>
