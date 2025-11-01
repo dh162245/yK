@@ -456,6 +456,65 @@ window.addEventListener('load', () => {
   // ScrollTrigger.getAll().forEach(st => st.refresh());
 });
 
+(function(){
+  // config
+  const mottoDelay = 0.18;     // seconds before motto appears
+  const mottoIn = 0.7;         // motto reveal duration
+  const hold = 0.7;            // how long motto is visible before curtains move
+  const curtainTime = 1.0;     // curtains open duration
+  const ease = "power3.inOut";
+
+  const reveal = document.getElementById('pageReveal');
+  const left = document.querySelector('.curtain-left');
+  const right = document.querySelector('.curtain-right');
+  const motto = document.querySelector('.motto');
+  const subtitle = document.querySelector('.motto-sub');
+
+  if (!reveal || !left || !right || !motto) return;
+
+  // lock scrolling while reveal active
+  document.body.classList.add('reveal-locked');
+
+  // initial state
+  gsap.set([left, right], { xPercent: 0 }); // curtains covering
+  gsap.set(motto, { scale: 0.96, y: 12, opacity: 0 });
+  gsap.set(subtitle, { opacity: 0, y: 6 });
+
+  const tl = gsap.timeline({
+    defaults: { ease },
+    onComplete: cleanup
+  });
+
+  // motto pop in
+  tl.to(motto, { duration: mottoIn, opacity: 1, scale: 1, y: 0, ease: "back.out(1.1)" }, `+=${mottoDelay}`);
+  tl.to(subtitle, { duration: 0.6, opacity: 1, y: 0 }, `-=${mottoIn/2}`);
+
+  // hold then animate curtains splitting
+  tl.to({}, { duration: hold }); // empty delay
+
+  // animate curtains: left slides left, right slides right (out of viewport)
+  tl.to(left, { duration: curtainTime, xPercent: -110, rotation: -0.4, ease }, `>0`);
+  tl.to(right, { duration: curtainTime, xPercent: 110, rotation: 0.4, ease }, `<`); // start same time
+
+  // motto fade/move up while curtains open
+  tl.to([motto, subtitle], { duration: 0.6, opacity: 0, y: -14, ease: "power2.in" }, `<+${curtainTime*0.25}`);
+
+  // slight reveal glide for page content (optional)
+  tl.to(reveal, { duration: 0.001, pointerEvents: "none" }, "+=0.02"); // disable pointer events on overlay if needed
+
+  // small pause then remove element completely
+  tl.to(reveal, { duration: 0.4, autoAlpha: 0, ease: "power1.out", delay: 0.08 });
+
+  // cleanup function after timeline completes
+  function cleanup() {
+    // remove overlay from DOM (optional), unlock scrolling
+    document.body.classList.remove('reveal-locked');
+    // you can remove element to save nodes
+    if (reveal && reveal.parentNode) reveal.parentNode.removeChild(reveal);
+    // if you want to trigger any entrance GSAP animations for page content, start them here
+  }
+})();
+
 // smooth-scroll-to-form.js — add to contact.js or main.js
 (function () {
   const btn = document.getElementById('signUp');

@@ -9,12 +9,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&family=Lora:wght@400;700&family=Caveat:wght@400;700&display=swap&subset=cyrillic" rel="stylesheet">
 
 <!-- GSAP (animation lib) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
   <!-- EmailJS client lib -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="src/main.js" defer></script>
-
 
 
 </head>
@@ -23,7 +21,7 @@
 <div id="pageReveal" class="page-reveal">
   <div class="motto-wrap" aria-hidden="true">
     <h2 class="motto">«Путь к гармонии начинается с понимания себя» </h2>
-    <!-- <p class="motto-sub">Короткая 15-минутная вводная консультация</p> -->
+    <p class="motto-sub"></p>
   </div>
 
   <!-- curtains -->
@@ -255,60 +253,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
     <script src="src/main.js"></script>
     <script src="src/contact.js"></script>
-<!-- GSAP CDN (use same version you used) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- GSAP CDN (add in <head> or before this script) -->
 
-<script>
-window.addEventListener('DOMContentLoaded', function () {
-  // small helper to safely query and warn
-  function $q(sel) {
-    const el = document.querySelector(sel);
-    if (!el) console.warn('Reveal: element not found ->', sel);
-    return el;
-  }
 
-  const reveal = $q('#pageReveal');
-  const left = $q('.curtain-left');
-  const right = $q('.curtain-right');
-  const motto = $q('.motto');
-  const subtitle = $q('.motto-sub');
-
-  // If the markup isn't present, abort gracefully
-  if (!reveal || !left || !right || !motto) {
-    console.warn('Reveal animation aborted: missing one or more required elements.');
-    return;
-  }
-
-  // lock scrolling while reveal active
-  document.body.classList.add('reveal-locked');
-
-  // initial state (safe: elements exist)
-  gsap.set([left, right], { xPercent: 0 });
-  gsap.set(motto, { scale: 0.96, y: 12, opacity: 0 });
-  if (subtitle) gsap.set(subtitle, { opacity: 0, y: 6 });
-
-  const tl = gsap.timeline({
-    defaults: { ease: 'power3.inOut' },
-    onComplete: cleanup
-  });
-
-  tl.to(motto, { duration: 0.7, opacity: 1, scale: 1, y: 0, ease: "back.out(1.1)" }, '+=0.18');
-  if (subtitle) tl.to(subtitle, { duration: 0.6, opacity: 1, y: 0 }, '-=0.35');
-
-  tl.to({}, { duration: 0.7 }); // hold
-
-  tl.to(left, { duration: 1.0, xPercent: -110, rotation: -0.4 }, '>0');
-  tl.to(right, { duration: 1.0, xPercent: 110, rotation: 0.4 }, '<');
-
-  tl.to([motto, subtitle].filter(Boolean), { duration: 0.6, opacity: 0, y: -14 }, '<+0.25');
-  tl.to(reveal, { duration: 0.4, autoAlpha: 0, ease: "power1.out", delay: 0.08 });
-
-  function cleanup() {
-    document.body.classList.remove('reveal-locked');
-    if (reveal && reveal.parentNode) reveal.parentNode.removeChild(reveal);
-  }
-});
-</script>
 
 
 </body>
